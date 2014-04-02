@@ -43,20 +43,12 @@ $(document).ready(function() {
 
 	var zones = document.getElementsByClassName("drop-zone");
 
-	console.log(zones);
-
 	for (i = 0 ; i < zones.length ; i++){
 		zones[i].addEventListener("dragleave",sortieZone,false);
 		zones[i].addEventListener("dragover",survolZone,false);
 		zones[i].addEventListener("drop",depot,false);
 		zones[i].addEventListener("click",parcourir,false);
 	}
-	
-	/*
-	$('.drop-zone').on("dragenter",entreeZone,false);
-	$('.drop-zone').on("dragover",survolZone,false);
-	$('.drop-zone').on("drop",depot,false);*/
-	$('btn-parcourir').on('click',parcourir,false);
 
 	//ECOUTEURS PIXELLISATION
 	$('#radio_pix_desactive').click(function(){
@@ -142,8 +134,10 @@ $(document).ready(function() {
 		$(".visuel-drop-zone").css("border","solid #222222");
 		//event.target.style.border = "solid #222222";
 		event.preventDefault();
+		console.log(event);
 
 		var images = event.dataTransfer.files;
+		console.log(images);
 		
 		if(images.length != 1) {
 			alert("Erreur : Vous avez déposé plusieurs fichiers");
@@ -152,11 +146,22 @@ $(document).ready(function() {
 			var fichierImage = new FormData(); //API HTML5
 			fichierImage.append("fichier-image",images[0]);
 			telechargement(fichierImage);
+
+			console.log(fichierImage);
 		}
 	}
 
-	function parcourir(){
-		
+	function parcourir(event){
+
+		//Quand on choisi un fichier 
+		document.getElementById('drop-zone').onchange=function(){
+
+			//telechargement();
+	
+		};
+
+		// http://blog.niap3d.com/fr/4,10,news-17-Envoyer-un-fichier-en-ligne-partie-3.html
+
 	}
 
 	//FONCTION QUI TRAITE L'IMAGE ENREGISTEE
