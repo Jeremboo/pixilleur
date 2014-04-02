@@ -1,0 +1,141 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>Pixilleur</title>
+        
+        <!-- <link rel="icon" type="image/png" href="favicon.png" /> -->
+        <meta name="description" content="Pixelisez vos images pour en resortir une vision abstraite et colorée">
+		<meta name="robots" content="all">
+		<meta name="author" content="Jérémie Boulay">
+        
+        <link rel="stylesheet" href="css-pixilleur/style.css">
+    </head>
+    
+    <body>
+       <!--  En premier pour un chargement en fond de page -->
+        <section id="wrapper-image" class="wrapper-image">
+
+            <!-- Ajout en JavaScript -->
+            <div id="image" class="image">
+                <img id="image-0" src="" alt="Pixilleur - Jérémie Boulay - Image de base">
+                <img id="image-1" src="" alt="Pixilleur - Jérémie Boulay - Image pixellisée niveau 1">
+                <img id="image-2" src="" alt="Pixilleur - Jérémie Boulay - Image pixellisée niveau 2">
+                <img id="image-3" src="" alt="Pixilleur - Jérémie Boulay - Image pixellisée niveau 3">
+                <img id="image-4" src="" alt="Pixilleur - Jérémie Boulay - Image pixellisée niveau 4">
+                <img id="image-5" src="" alt="Pixilleur - Jérémie Boulay - Image pixellisée niveau 5">         
+            </div>
+            
+        </section>
+
+        
+        <header class="presentation">
+        
+            <h1></h1>
+            <h3>Du gros pixel dans vos images <strong>(BETA)</strong></h3>
+            
+            <ul class="images-exemple" id="images-exemple">
+                <li><img src="images-pixilleur/exemple1.png" title="Jérémie Boulay - personnage" alt="Jérémie Boulay - personnage" width="140"></li>
+                <li><img src="images-pixilleur/exemple4.jpg" title="Kevin Matadi - portrait" alt="Kevin Matadi - portrait" width="85" height="105"></li>
+                <li><img src="images-pixilleur/exemple3.jpg" title="Nicolas Martin - spiderMan" alt="Nicolas Martin - spiderMan" width="105"></li>
+                <li> <img src="images-pixilleur/exemple2.jpg" title="Zineddinne Aziez - Mario" alt="Zineddinne Aziez - Mario" width="78.75" height="105"></li>
+                <li><img src="images-pixilleur/exemple5.png" title="Jérémie Boulay - portrait" alt="Jérémie Boulay - portrait" width="140"></li>
+            </ul>
+            
+            <p>Pixelisez n'importe laquelle de vos images pour en ressortir une vision abstraite et colorée !</p>
+
+            <p><strong>Commencez par telecharger une de vos images.</strong></p>
+
+            <div class="parcourir">
+                <div class="visuel-drop-zone" id="visuel-drop-zone">Glissez et Déposez une image.</div>
+                <p class="caracteristique">JPG, PNG ou GIF / 1 Mo max</p>
+                <input type="file" dropzone="copy" class="drop-zone" id="drop-zone">
+            </div>
+        </header>
+
+        
+        <div class="wrapper-chargement-bar" id="wrapper-chargement-bar">
+            <div class="chargement-bar" id="chargement-bar">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+            <p>téléchargement</p>
+            
+        </div>
+        
+        <p class="fidelisation">Projet réalisé par <a href="http://www.jeremieboulay.fr">Jérémie Boulay</a></p>
+
+        <section class="fonctionnalites">
+            <div class="parametres">
+                
+                <div class="pixellisation">
+                    <h3>Taux de pixillisation</h3>
+                    
+                    <div class="parametre_pix">
+                        <p>desactive</p>
+                        <form class="form_pix">
+
+                            <input id="radio_pix_desactive" type="radio" name="radio_pix" value="radio_pix">  
+                            <label class="radio_pix_desactive" for="radio_pix_desactive"></label>    
+    
+                            <input id="pix_tfaible" type="radio" name="radio_pix" value="pix_tfaible">  
+                            <label for="pix_tfaible"></label> 
+
+                            <input id="pix_faible" type="radio" name="radio_pix" value="pix_faible">  
+                            <label for="pix_faible"></label>
+
+                             <input id="pix" type="radio" name="radio_pix" value="pix">  
+                            <label for="pix"></label>  
+
+                            <input id="pix_fort" type="radio" name="radio_pix" value="pix_fort">  
+                            <label for="pix_fort"></label>
+
+                             <input id="pix_tfort" type="radio" name="radio_pix" value="pix_tfort">  
+                            <label for="pix_tfort"></label>  
+
+                        </form>
+                        <p><span>faible</span><span>forte</span></p>
+                        
+                    </div>
+                </div>
+            </div>
+            
+            <div class="parcourir">
+            	<div class="visuel-drop-zone" id="visuel-drop-zone">Glissez et Déposez une image.</div>
+                <p class="caracteristique">JPG, PNG ou GIF / 1 Mo max</p>
+                <input type="file" dropzone="copy" class="drop-zone" id="drop-zone">
+            </div>
+            
+            <div class="telechargement">
+            <!--<div class="btns_share" id="btn_share">
+                    <div id="btn_share_facebook" class="btn_share_facebook">
+                        <img src="img/facebook-icon.gif" height="25">
+                        
+                    </div>
+                    <div id="btn_share_twitter" class="btn_share_twitter">
+                        <img src="img/twitter-icon.png" width="25">
+                        
+                    </div>
+                </div>-->
+                <button id="btn_telechargement" class="btn_telechargement">Téléchargez l'image</button>
+            </div>
+        </section>
+
+		<script src="js-pixilleur/jquery.js"></script>
+        <script src="js-pixilleur/jquery.upload-1.0.2.min.js"></script>
+        <script src="js-pixilleur/main.js"></script>
+        <script type="text/javascript">
+
+          var _gaq = _gaq || [];
+          _gaq.push(['_setAccount', 'UA-39290456-2']);
+          _gaq.push(['_setDomainName', 'jeremieboulay.fr']);
+          _gaq.push(['_trackPageview']);
+
+          (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+          })();
+
+        </script>
+    </body>
+</html>

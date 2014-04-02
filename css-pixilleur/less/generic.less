@@ -1,0 +1,33 @@
+/* #################### */
+/* STYLES GENERIQUES */
+/* #################### */
+
+body{
+	font: 1em 'jockey_oneregular', sans-serif;
+	background-color: #222222;
+}
+
+h1{
+	font-size: 3em;
+}
+h3{
+	font-size: 1.3em;
+}
+p,h3,div,button{
+	color: white;
+}
+a, strong{
+	color: @orange;
+}
+
+.fond_noir_transparent{
+	background-color: black; 
+	position:absolute;
+	z-index:-1; 
+	top:0; 
+	left:0; 
+	right:0; 
+    bottom:0; 
+	.opacite(0.5);
+	.transitional;
+}

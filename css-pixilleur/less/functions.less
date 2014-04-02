@@ -1,0 +1,35 @@
+/* #################### */
+/* FONCTIONS LESS */
+/* #################### */
+
+.transitional(@tempo: 0.4s) {
+	-o-transition:@tempo;
+ 	-ms-transition:@tempo;
+ 	-moz-transition:@tempo;
+ 	-webkit-transition:@tempo;
+ 	transition:@tempo;
+}
+
+.unselectable(){
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.opacite(@taux){
+	opacity:@taux;
+    -moz-opacity:@taux;
+    -khtml-opacity:@taux;
+}
+
+.fondNoirTransparent(){
+	background-color: rgba(0, 0, 0, 0.5);
+	.transitional();
+
+	&:hover{
+		background-color: rgba(0, 0, 0, 0.8);
+	}
+}
