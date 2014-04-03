@@ -18,7 +18,6 @@ $(document).ready(function() {
 
 	//variables de detection verification
 	var click_telechargement = false;
-	var image_deja_telechargee = false;
 	var image_visible =  "";
 
 	//varaibles pour l'affichage
@@ -135,10 +134,7 @@ $(document).ready(function() {
 		$(".visuel-drop-zone").css("border","solid #222222");
 		//event.target.style.border = "solid #222222";
 		event.preventDefault();
-
 		testReception(event.dataTransfer.files);
-		
-		
 	}
 
 	function parcourir(event){
@@ -169,7 +165,6 @@ $(document).ready(function() {
 				alert("La photo envoyée est trop volumineuse. 1Mo max");
 			}
 		}
-
 	}
 
 	//FONCTION QUI TRAITE L'IMAGE ENREGISTEE
@@ -189,21 +184,19 @@ $(document).ready(function() {
 				url_repertoire = retour.url_repertoire;
 				url_image_base = retour.url_image_base;
 				code = retour.code_ref;
-				
+
 				if(retour.erreur != ""){
 
 					alert("Erreur : "+retour.erreur);
 
 				} else {
-					
-					gestionAffichage();
 
+					
 					redimentionnementImage();
 				}		
-				
 			}
 		}
-
+		gestionAffichage();
 		xhr.open("POST","php-pixilleur/telechargement.php",true);
 		xhr.send(fichierImage);
 	}
@@ -211,7 +204,8 @@ $(document).ready(function() {
 	function gestionAffichage(){
 
 		//SI : il ya déjà une image.
-		if(image_deja_telechargee){
+		if($("#image-0").attr("src") != ""){
+			
 			//suppression du dossier déjà téléchargé 
 			supp_dossier();
 
@@ -222,8 +216,8 @@ $(document).ready(function() {
 			;
 
 		} else {
+
 			//SINON : Mise en place de la présentation pour l'image.
-			
 			$('.presentation div, .presentation p').animate({'opacity':0},500, function(){	
 					
 				//animation de mise en place
@@ -246,6 +240,8 @@ $(document).ready(function() {
 
 		//CALCUL DES DIMENTIONS
 		$.getJSON("php-pixilleur/nombres_divisible_commun.php",{ url_img_base : url_image_base },function(retour){
+
+			console.log("retour");
 
 			img_width = retour.img_width;
 			img_height = retour.img_height;
@@ -307,8 +303,6 @@ $(document).ready(function() {
 		} else {
 
 			MiseAJourBarreChargement(10,"preparation fonctionnalitées");
-
-			image_deja_telechargee = true;
 
 			//apparition des fonctionnalitées
 			$('.fonctionnalites').animate({'opacity':1},800,function(){
