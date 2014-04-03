@@ -190,12 +190,11 @@ $(document).ready(function() {
 					alert("Erreur : "+retour.erreur);
 
 				} else {
-
-					
 					redimentionnementImage();
 				}		
 			}
 		}
+
 		gestionAffichage();
 		xhr.open("POST","php-pixilleur/telechargement.php",true);
 		xhr.send(fichierImage);
@@ -287,7 +286,7 @@ $(document).ready(function() {
 
 			//AJAX : pixellisation de l'image en fonction d'un diviseur donné
 			$.getJSON("php-pixilleur/pixellisation.php",
-				{ nbrpixel : tbl_diviseurs_commun[5-nbr_pixellisation],
+				{ nbrpixel : tbl_diviseurs_commun[nbr_pixellisation-1],
 				  url_img_base : url_image_base,
 				  url_repertoire : url_repertoire,
 				  numero_img : nbr_pixellisation,

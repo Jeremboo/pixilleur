@@ -1,14 +1,10 @@
 <?php
 
-
-
 	$url_image_base = $_GET['url_img_base'];
 	$width_img = $_GET['width'];
 	$height_img = $_GET['height'];
 
 	redimentionnment($url_image_base,$width_img,$height_img);
-
-
     
     /* REDIMENTIONNE L'IMAGE EN SUPPRIMANT LE TROP
 
@@ -46,5 +42,4 @@
 		imagedestroy($image); //détruit l'image, libérant ainsi de la mémoire
 		imagedestroy($image_dest);
 	}
-
 ?>
