@@ -134,20 +134,30 @@ $(document).ready(function() {
 		$(".visuel-drop-zone").css("border","solid #222222");
 		//event.target.style.border = "solid #222222";
 		event.preventDefault();
-		console.log(event);
 
 		var images = event.dataTransfer.files;
-		console.log(images);
 		
 		if(images.length != 1) {
 			alert("Erreur : Vous avez déposé plusieurs fichiers");
 		} else {
 
-			var fichierImage = new FormData(); //API HTML5
-			fichierImage.append("fichier-image",images[0]);
-			telechargement(fichierImage);
+			//TEST du poid de l'image 1Mo max 
+			if( images[0].size < 1048576 ){
 
-			console.log(fichierImage);
+				// TEST du format de l'image
+				if( images[0].type == "image/jpeg" || images[0].type == "image/png" || images[0].type == "image/gif"){
+
+					//ENVOIS DU FICHIER AU TELECHARGEMENT
+					var fichierImage = new FormData(); //API HTML5
+					fichierImage.append("fichier-image",images[0]);
+					telechargement(fichierImage);
+
+				} else {
+					alert("La photo envoyée n'est pas au bon format. (accepté : .jpg .png .gif");
+				}
+			} else {
+				alert("La photo envoyée est trop volumineuse. 1Mo max");
+			}
 		}
 	}
 
@@ -157,10 +167,7 @@ $(document).ready(function() {
 		document.getElementById('drop-zone').onchange=function(){
 
 			//telechargement();
-	
 		};
-
-		// http://blog.niap3d.com/fr/4,10,news-17-Envoyer-un-fichier-en-ligne-partie-3.html
 
 	}
 
@@ -172,8 +179,8 @@ $(document).ready(function() {
 
 		xhr.onreadystatechange = function(){
 
-			if(this.readyState==4)
-			{
+			if(this.readyState==4){
+
 				//retour du fichier PHP en JSON
 				var retour = JSON.parse(this.responseText);
 
@@ -195,6 +202,7 @@ $(document).ready(function() {
 				
 			}
 		}
+
 		xhr.open("POST","php-pixilleur/telechargement.php",true);
 		xhr.send(fichierImage);
 	}
