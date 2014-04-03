@@ -7,6 +7,7 @@
 
 	//recuperer la taille de l'image.
 	$image_sizes = getimagesize($url_image_base);
+
 	$width = $image_sizes[0];
 	$height = $image_sizes[1];
 
@@ -19,7 +20,7 @@
 		$width = $CalculateurTC->GetLongueurSec();
 		$height = $CalculateurTC->GetLongueurRef();
 	} else {
-		$CalculateurTC = new TaillesCommunes($width,$heigth);
+		$CalculateurTC = new TaillesCommunes($width,$height);
 		$width = $CalculateurTC->GetLongueurRef();
 		$height = $CalculateurTC->GetLongueurSec();
 	}
@@ -32,7 +33,7 @@
 		'img_width'      => $width,
 		'img_height'	=> $height
 	);
-	 
+
 	// Envoi du retour (on renvoi le tableau $retour encodé en JSON)
 	header('Content-type: application/json');
 	echo json_encode($retour);
