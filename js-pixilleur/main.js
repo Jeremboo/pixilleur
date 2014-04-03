@@ -47,7 +47,7 @@ $(document).ready(function() {
 		zones[i].addEventListener("dragleave",sortieZone,false);
 		zones[i].addEventListener("dragover",survolZone,false);
 		zones[i].addEventListener("drop",depot,false);
-		zones[i].addEventListener("click",parcourir,false);
+		zones[i].addEventListener("change",parcourir,false);
 	}
 
 	//ECOUTEURS PIXELLISATION
@@ -131,25 +131,35 @@ $(document).ready(function() {
 	}
 
 	function depot(event){
+
 		$(".visuel-drop-zone").css("border","solid #222222");
 		//event.target.style.border = "solid #222222";
 		event.preventDefault();
 
-		var images = event.dataTransfer.files;
+		testReception(event.dataTransfer.files);
 		
-		if(images.length != 1) {
+		
+	}
+
+	function parcourir(event){
+		testReception(event.target.files);
+	}
+
+	function testReception(fichier){
+
+		if(fichier.length != 1) {
 			alert("Erreur : Vous avez déposé plusieurs fichiers");
 		} else {
 
 			//TEST du poid de l'image 1Mo max 
-			if( images[0].size < 1048576 ){
+			if( fichier[0].size < 1048576 ){
 
 				// TEST du format de l'image
-				if( images[0].type == "image/jpeg" || images[0].type == "image/png" || images[0].type == "image/gif"){
+				if( fichier[0].type == "image/jpeg" || fichier[0].type == "image/png" || fichier[0].type == "image/gif"){
 
 					//ENVOIS DU FICHIER AU TELECHARGEMENT
 					var fichierImage = new FormData(); //API HTML5
-					fichierImage.append("fichier-image",images[0]);
+					fichierImage.append("fichier-image",fichier[0]);
 					telechargement(fichierImage);
 
 				} else {
@@ -159,15 +169,6 @@ $(document).ready(function() {
 				alert("La photo envoyée est trop volumineuse. 1Mo max");
 			}
 		}
-	}
-
-	function parcourir(event){
-
-		//Quand on choisi un fichier 
-		document.getElementById('drop-zone').onchange=function(){
-
-			//telechargement();
-		};
 
 	}
 
