@@ -2,6 +2,7 @@
 
 	//variables d'arrivé
 	$url_image_base = $_GET['url_img_base'];
+	$type_traitement = $_GET['type_traitement'];
 	$url_repertoire_img = $_GET['url_repertoire'];
 	$code_reference = $_GET['code_ref'];
 	$numero_img  = $_GET['numero_img'];
@@ -23,12 +24,8 @@
 	$url_image_pixilisee = $url_repertoire_img."/pixilleur-img-".$numero_img."-".$code_reference.".png";
 
 
-	$typeTraitement = "carre";
-
 	$pixelleur = new Pixellisation();
-
-
-	$image = $pixelleur->TraitementImage($url_image_base,$taille_grospixel,$typeTraitement);
+	$image = $pixelleur->TraitementImage($url_image_base,$taille_grospixel,$type_traitement);
 
 	//###################
 	// ENREGISTREMENT 
