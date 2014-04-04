@@ -20,6 +20,7 @@
 	//creation du nom et du chemin futur de l'image de traitement
 	$url_image_pixilisee = $url_repertoire_img."/pixilleur-img-".$numero_img."-".$code_reference.".png";
 
+<<<<<<< Updated upstream
 
 	//creation de l'image virtuel de traitement
 	$image = imagecreatefrompng($url_image_base);
@@ -62,6 +63,12 @@
 		$traceur_x = 0;
 	}
 
+=======
+	$typeTraitement = "carre";
+
+	$pixelleur = new Pixellisation();
+	$image = $pixelleur->TraitementImage($url_image_base,$taille_grospixel,$typeTraitement);
+>>>>>>> Stashed changes
 
 	//###################
 	// ENREGISTREMENT 
