@@ -287,7 +287,7 @@ $(document).ready(function() {
 			//AJAX : pixellisation de l'image en fonction d'un diviseur donné
 			$.getJSON("php-pixilleur/pixellisation.php",
 				{ nbrpixel : tbl_diviseurs_commun[5-nbr_pixellisation],
-				  type_traitement : "carre",
+				  type_traitement : "2triangles",
 				  url_img_base : url_image_base,
 				  url_repertoire : url_repertoire,
 				  numero_img : nbr_pixellisation,
