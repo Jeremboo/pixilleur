@@ -92,26 +92,33 @@ class Pixellisation{
 		$couleur_pixel_g = $this->getColor($x-($this->dimention_grospixel/4),$y);
 		$couleur_pixel_d = $this->getColor($x+($this->dimention_grospixel/4),$y);
 
-		// Si sens reste a zero de gauche a droite, sinon de droite a gauche
-		$gestion_sens = 0;
 		if ( rand(0,1) == 1){
-			$gestion_sens = $this->dimention_grospixel;
+
+			//POUR : chaques colonne d'un grospixel a remplir
+			for($yy=0 ; $yy < $this->dimention_grospixel ; $yy++){
+				//POUR : chaque ligne d'un grospixel à remplir			
+				for($xx=0 ; $xx < $this->dimention_grospixel ; $xx++){
+
+					if ($xx < $this->dimention_grospixel-$yy){
+						imagesetpixel($this->image, $xx+$traceur_x, $yy+$traceur_y ,$couleur_pixel_g);
+					} else {
+						imagesetpixel($this->image, $xx+$traceur_x, $yy+$traceur_y ,$couleur_pixel_d);
+					}
+				}	
+			}
+
+		} else {
+
+			for($yy=0 ; $yy < $this->dimention_grospixel ; $yy++){		
+				for($xx=0 ; $xx < $this->dimention_grospixel ; $xx++){
+					if ($xx < $yy){
+						imagesetpixel($this->image, $xx+$traceur_x, $yy+$traceur_y ,$couleur_pixel_g);
+					} else {
+						imagesetpixel($this->image, $xx+$traceur_x, $yy+$traceur_y ,$couleur_pixel_d);
+					}
+				}	
+			}
 		}
-
-		//POUR : chaques colonne d'un grospixel a remplir
-		for($yy=0 ; $yy < $this->dimention_grospixel ; $yy++){
-			//POUR : chaque ligne d'un grospixel à remplir			
-			for($xx=0 ; $xx < $this->dimention_grospixel ; $xx++){
-
-				if ($xx < abs($gestion_sens-$yy)){
-					imagesetpixel($this->image, $xx+$traceur_x, $yy+$traceur_y ,$couleur_pixel_g);
-				} else {
-					imagesetpixel($this->image, $xx+$traceur_x, $yy+$traceur_y ,$couleur_pixel_d);
-				}
-			}	
-		}
-
-
 	}
 
 	private function getColor($x,$y){
