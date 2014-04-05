@@ -45,11 +45,8 @@ class Pixellisation{
 					case '2triangles':
 						$this->traitement2Triangles($x,$y,$traceur_x,$traceur_y);
 						break;
-					case '3triangles':
-						# code...
-						break;
 					case '4triangles':
-						# code...
+						$this->traitement4Triangles($x,$y,$traceur_x,$traceur_y);
 						break;
 					case 'croix':
 						# code...
@@ -119,6 +116,36 @@ class Pixellisation{
 				}	
 			}
 		}
+	}
+
+	private function traitement4Triangles($x,$y,$traceur_x,$traceur_y){
+
+		$couleur_pixel_g = $this->getColor($x-($this->dimention_grospixel/4),$y);
+		$couleur_pixel_d = $this->getColor($x+($this->dimention_grospixel/4),$y);
+		$couleur_pixel_h = $this->getColor($x,$y-($this->dimention_grospixel/4));
+		$couleur_pixel_b = $this->getColor($x,$y+($this->dimention_grospixel/4));
+
+		//POUR : chaques colonne d'un grospixel a remplir
+		for($yy=0 ; $yy < $this->dimention_grospixel ; $yy++){
+			//POUR : chaque ligne d'un grospixel à remplir			
+			for($xx=0 ; $xx < $this->dimention_grospixel ; $xx++){
+
+				if ($xx < $yy){
+					if ($xx < $this->dimention_grospixel-$yy){
+						imagesetpixel($this->image, $xx+$traceur_x, $yy+$traceur_y ,$couleur_pixel_g);
+					} else {
+						imagesetpixel($this->image, $xx+$traceur_x, $yy+$traceur_y ,$couleur_pixel_b);
+					}					
+				} else {
+					if ($xx < $this->dimention_grospixel-$yy){
+						imagesetpixel($this->image, $xx+$traceur_x, $yy+$traceur_y ,$couleur_pixel_h);
+					} else {
+						imagesetpixel($this->image, $xx+$traceur_x, $yy+$traceur_y ,$couleur_pixel_d);
+					}
+				}
+			}	
+		}
+
 	}
 
 	private function getColor($x,$y){
