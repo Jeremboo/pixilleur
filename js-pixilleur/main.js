@@ -10,6 +10,7 @@ $(document).ready(function() {
 
 	var url_repertoire = ""; //prend le code reference du traitement de l'image.
 	var url_image_base = "";
+	var traitement = "carre";
 
 	var img_width = 0; // dimention de l'image traitée en X.
 	var img_height = 0; // dimention de l'image traitée en Y.
@@ -240,8 +241,6 @@ $(document).ready(function() {
 		//CALCUL DES DIMENTIONS
 		$.getJSON("php-pixilleur/nombres_divisible_commun.php",{ url_img_base : url_image_base },function(retour){
 
-			console.log("retour");
-
 			img_width = retour.img_width;
 			img_height = retour.img_height;
 
@@ -286,7 +285,8 @@ $(document).ready(function() {
 
 			//AJAX : pixellisation de l'image en fonction d'un diviseur donné
 			$.getJSON("php-pixilleur/pixellisation.php",
-				{ nbrpixel : tbl_diviseurs_commun[nbr_pixellisation-1],
+				{ nbrpixel : tbl_diviseurs_commun[5-nbr_pixellisation],
+				  type_traitement : traitement,
 				  url_img_base : url_image_base,
 				  url_repertoire : url_repertoire,
 				  numero_img : nbr_pixellisation,

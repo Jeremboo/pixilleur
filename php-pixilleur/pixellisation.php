@@ -2,10 +2,13 @@
 
 	//variables d'arrivé
 	$url_image_base = $_GET['url_img_base'];
+	$type_traitement = $_GET['type_traitement'];
 	$url_repertoire_img = $_GET['url_repertoire'];
 	$code_reference = $_GET['code_ref'];
 	$numero_img  = $_GET['numero_img'];
-	$nbr_grospixel = $_GET['nbrpixel'];
+	$taille_grospixel = $_GET['nbrpixel'];
+
+	include('class-pixilleur/Pixellisation.class.php');
 
 	//variable de retour
 	$url_image_pixilisee = "";
@@ -22,6 +25,7 @@
 
 <<<<<<< Updated upstream
 
+<<<<<<< HEAD
 	//creation de l'image virtuel de traitement
 	$image = imagecreatefrompng($url_image_base);
 
@@ -69,14 +73,17 @@
 	$pixelleur = new Pixellisation();
 	$image = $pixelleur->TraitementImage($url_image_base,$taille_grospixel,$typeTraitement);
 >>>>>>> Stashed changes
+=======
+	$pixelleur = new Pixellisation();
+	$image = $pixelleur->TraitementImage($url_image_base,$taille_grospixel,$type_traitement);
+>>>>>>> DevMultiPix
 
 	//###################
 	// ENREGISTREMENT 
 	//###################
 	$reponse = "erreur : l'image ne c'est pas enregistrée";
-	if(imagepng( $image, $url_image_pixilisee)){
+	if(imagepng( $image, $url_image_pixilisee))
 		$reponse = "taille du pixel : "+$dimention_grospixel; 
-	}
 	
 	imagedestroy($image); //détruit l'image, libérant ainsi de la mémoire
 	
