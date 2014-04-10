@@ -38,6 +38,11 @@ $(document).ready(function() {
 	// ECOUTEURS
 	// ###############
 
+	//ECOUTEUR REDIMENTIONNEMENT
+	$(window).resize(function(){
+		 dimention_affichage_image();
+	});
+
 
 	//ECOUTEURS ZONE DE TELECHARGEMENT
 
