@@ -1,0 +1,142 @@
+@import "remise_zero.less";
+@import "fonts.less";
+@import "functions.less";
+
+/* Functions */
+
+
+
+
+/* Generic */
+
+body{
+	font: 1em 'jockey_oneregular', sans-serif;
+	background-color: #222222;
+}
+
+p,h3,div,button{
+	color: white;
+}
+a, strong{
+	color: @orange;
+}
+
+.fidelisation{
+	font-size: 0.8em;
+	position: fixed;
+	top: 5px;
+	right: 10px;
+}
+
+#blockFonctionnalitees{
+	display: inline-block;
+	vertical-align: top;
+	padding: 5px;
+	margin: 5px;
+	background-color: rgba(0, 0, 0, 0.5);
+	.transitional();
+
+	&:hover{
+		background-color: rgba(0, 0, 0, 0.8);
+	}
+}
+
+
+/* #################### */
+/* VARIABLES LESS */
+/* #################### */
+
+@gris : #222222;
+@orange : #FF9933;
+
+
+/* #################### */
+/* STYLES */
+/* #################### */
+
+/* HEADER */
+header{
+	background-color: black;
+	width: 100%;
+	padding: 10px;
+
+	h1{
+		width: 230px;
+		height: 50px;
+		background: url(../images-pixilleur/logo-tempo.png) no-repeat right bottom;
+	}
+}
+
+/* FONCTIONNALITEES */
+
+.selectionType{
+
+	li{
+		width: 55px;
+		height: 30px;
+		background-color: white;
+		display: inline-block;
+		margin: 0 3px;
+		margin-bottom: -1px;
+		padding: 0;
+		cursor: pointer;
+	}
+}
+
+.selectionNiveau{
+
+	li{
+		width: 15px;
+		height: 15px;
+		background-color: white;
+		margin: 10px 5px;
+	}
+}
+
+
+/* PARCOURIR (Drop Zone +btn) */
+
+.parcourir{
+	position: relative;
+
+	strong{
+		position: fixed;
+		bottom: 40px;
+	}
+	p{
+		.opacite(0.5);
+		float: right;
+		font-size: 0.8em;
+		margin-right: 4%;
+		margin-top: -21px;
+	}
+
+	input{
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		top: 0;
+		left: 0;
+		opacity: 0;
+		cursor: pointer;
+	}
+}
+.visuel-drop-zone{
+	margin: auto;
+	padding:10px 5px;
+	border:3px solid @gris;
+	border-radius: 5px;
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* BTN TELECHARGEMENT */
+
+.btn_telechargement{
+	width: 100%;
+	height: 100%;
+	padding: 0;
+	border: 0;
+	cursor: pointer;
+	font: 1em 'jockey_oneregular', sans-serif;
+	background-color: transparent;
+}
