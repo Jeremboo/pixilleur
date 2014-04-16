@@ -25,9 +25,6 @@ $(document).ready(function() {
 	var width_affichage = 0;
 	var height_affichage = 0;
 
-	//variable pour chargement
-	var chargement_size = 0;
-
 	// ###############
 	// INIT
 	// ###############
@@ -55,35 +52,24 @@ $(document).ready(function() {
 		zones[i].addEventListener("change",parcourir,false);
 	}
 
-	//ECOUTEURS PIXELLISATION
-	$('#radio_pix_desactive').click(function(){
-		image_visible = $('#image-0');
-		animation_affichage(0,0,0,true);
+	//ECOUTEURS TRAITEMENT
+	$('.traitement-carre').click(function(){
+		modifTraitement($(this),"carre");
 	});
-	
-	$('#pix_tfaible').click(function(){
-		image_visible = $('#image-1')
-		animation_affichage(0,0,0,true);
+
+	$('.traitement-2triangles').click(function(){
+		modifTraitement($(this),"2triangles");
 	});
-	
-	$('#pix_faible').click(function(){
-		image_visible = $('#image-2');
-		animation_affichage(0,0,0,true);
+
+	$('.traitement-4triangles').click(function(){
+		modifTraitement($(this),"4triangles");
 	});
-	
-	$('#pix').click(function(){
-		image_visible = $('#image-3');
-		animation_affichage(0,0,0,true);
-	});
-	
-	$('#pix_fort').click(function(){
-		image_visible = $('#image-4');
-		animation_affichage(0,0,0,true);
-	});
-	
-	$('#pix_tfort').click(function(){
-		image_visible = $('#image-5');
-		animation_affichage(0,0,0,true);
+
+
+	//ECOUTEURS DESACTIVATION PIXELLISATION
+
+	$(".btn-pix-desactive").click(function(){
+		modifNiveau($(this),$('#image-0'));
 	});
 
 	//BOUTON TELECHARGEMENT
@@ -120,6 +106,43 @@ $(document).ready(function() {
 	// ###############
 	// FONCTIONS
 	// ###############
+
+
+	function modifTraitement(onglet,type){
+
+		if(!$('.chargement-image').length){
+
+			$(".selection-type li").css("background-color","white");
+			onglet.css("background-color","red");
+			traitement = type;
+			
+			//SI : il ya déjà une image de chargée.
+			if($("#image-0").attr("src") != ""){
+				//Supprition des anciens boutons 
+				$('.selection-niveau ul li').each(function(){
+					$(this).off().remove();
+				});
+
+				modifNiveau($(this),$('#image-0'));
+
+
+				//indication du chargement
+				$(".selection-niveau ul").after("<div class='chargement-image'>k</div>");
+
+
+				//depard d'une nouvelle pixellisation
+				pixellisation(1);
+			}
+		}
+	}
+
+	function modifNiveau(onglet,img_visible){
+
+		$(".selection-niveau ul li, .btn-pix-desactive").css("background-color","white");
+		onglet.css("background-color","red");
+		image_visible = img_visible;
+		animation_affichage(0,0,0,true);
+	}
 
 	
 	function sortieZone(event){
@@ -231,14 +254,6 @@ $(document).ready(function() {
 
 			});
 		}
-
-		//afficher le chargement
-		$('.wrapper-chargement-bar')
-			.css("margin-top", ($(window).height()/2)+20)
-			.animate({'opacity':1},500)
-		;
-		
-		MiseAJourBarreChargement(5,'calcul redimentionnement');
 	}
 
 	function redimentionnementImage(){
@@ -251,12 +266,11 @@ $(document).ready(function() {
 
 			tbl_diviseurs_commun = retour.tbl_diviseurs_commun;
 
-			MiseAJourBarreChargement(5,'redimentionnement');
-
 			//REDIMENTIONNEMENT
 			$.get("php-pixilleur/redimentionnement.php",{ url_img_base : url_image_base, width : img_width, height : img_height },function(){
 
-
+				//indication d'un chargement
+				$(".selection-niveau ul").after("<div class='chargement-image'>k</div>");
 				//PIXELLISATION
 				pixellisation(1);
 
@@ -286,8 +300,6 @@ $(document).ready(function() {
 
 		if(nbr_pixellisation < 6){
 
-			MiseAJourBarreChargement(14,'pixellisation'+nbr_pixellisation);
-
 			//AJAX : pixellisation de l'image en fonction d'un diviseur donné
 			$.getJSON("php-pixilleur/pixellisation.php",
 				{ nbrpixel : tbl_diviseurs_commun[5-nbr_pixellisation],
@@ -300,18 +312,24 @@ $(document).ready(function() {
 
 					//ajouter la src à l'image correspondante
 					$('#image-'+nbr_pixellisation).attr('src', retour.url_image_pixilisee.substr(3));
+					
+					//ajouter un bouton de selection de la nouvelle image a pixelliser
+					$(".selection-niveau ul").append("<li class='btn-pix-"+nbr_pixellisation+"''></li>");
+			    	$(".btn-pix-"+nbr_pixellisation).on("click",function(){
+			    		modifNiveau($(this),$('#image-'+nbr_pixellisation));
+			    	});
+
+
 					//rappel de la fonction
 					pixellisation(nbr_pixellisation+1);
 				}
 			);
 		} else {
 
-			MiseAJourBarreChargement(10,"preparation fonctionnalitées");
+			$(".chargement-image").remove();
 
 			//apparition des fonctionnalitées
 			$('.fonctionnalites').animate({'opacity':1},800,function(){
-
-				MiseAJourBarreChargement(10,"ok");
 
 				$('.fonctionnalites')
 						.css("display","block")
@@ -324,19 +342,12 @@ $(document).ready(function() {
 				//Fin du chargement
 				$('.wrapper-chargement-bar').animate({"margin-top":0},1000,function(){
 					$(this).animate({'opacity':0},500,function(){
-						chargement_size = 0;
-						MiseAJourBarreChargement(0,"");
+						
 					});
 				});
 			});
 		}
 	}	
-
-	function MiseAJourBarreChargement(ajout,texte){
-		chargement_size = chargement_size+ajout;
-		$('.chargement-bar div').css('width', chargement_size+'%');
-		$('.wrapper-chargement-bar p').html(texte);
-	}
 
 	//Fonction pour animer l'apparition de l'image au centre de la page et bien cadrée.
 	function animation_affichage(w,h,o,reaparition){
