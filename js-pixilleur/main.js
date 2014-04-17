@@ -127,7 +127,7 @@ $(document).ready(function() {
 
 
 				//indication du chargement
-				$(".selection-niveau ul").after("<div class='chargement-image'>k</div>");
+				$(".selection-niveau ul").after("<div class='chargement-image'></div>");
 
 
 				//depard d'une nouvelle pixellisation
@@ -270,7 +270,7 @@ $(document).ready(function() {
 			$.get("php-pixilleur/redimentionnement.php",{ url_img_base : url_image_base, width : img_width, height : img_height },function(){
 
 				//indication d'un chargement
-				$(".selection-niveau ul").after("<div class='chargement-image'>k</div>");
+				$(".selection-niveau ul").after("<div class='chargement-image'></div>");
 				//PIXELLISATION
 				pixellisation(1);
 

@@ -2,9 +2,36 @@
 @import "fonts.less";
 @import "functions.less";
 
+
+/* Animation */
+
+@-webkit-keyframes animChargement{ 
+	0% { border-radius: 2; }
+    50%  { border-radius: 50%; -webkit-transform:rotate(90deg); }
+    100% { border-radius: 3; -webkit-transform:rotate(180deg); }
+} 
+@-moz-keyframes animChargement{ 
+    0% { border-radius: 2; }
+    50%  { border-radius: 50%; -webkit-transform:rotate(90deg); }
+    100% { border-radius: 3; -webkit-transform:rotate(180deg); }
+} 
+@-ms-keyframes animChargement{ 
+    0% { border-radius: 2; }
+    50%  { border-radius: 50%; -webkit-transform:rotate(90deg); }
+    100% { border-radius: 3; -webkit-transform:rotate(180deg); }
+} 
+@-o-keyframes animChargement{ 
+    0% { border-radius: 2; }
+    50%  { border-radius: 50%; -webkit-transform:rotate(90deg); }
+    100% { border-radius: 3; -webkit-transform:rotate(180deg); }
+} 
+@-webkit-keyframes animChargement{
+	0% { border-radius: 2; }
+    50%  { border-radius: 50%; -webkit-transform:rotate(90deg); }
+    100% { border-radius: 3; -webkit-transform:rotate(180deg); }
+}
+
 /* Functions */
-
-
 
 
 /* Generic */
@@ -84,8 +111,7 @@ header{
 	.traitement-carre{
 		background-color: red;
 	}
-}
-
+}  
 
 .selection-niveau{
 
@@ -105,9 +131,13 @@ header{
 	}
 
 	.chargement-image{
-		background-color: green;
+		background-color: @orange;
+		-webkit-animation: animChargement 1s infinite linear;
+        -moz-animation: animChargement 1s infinite linear;
+        -ms-animation: animChargement 1s infinite linear;
+        -o-animation: animChargement 1s infinite linear;
+        animation: animChargement 1s infinite linear; 
 	}
-
 }
 
 
