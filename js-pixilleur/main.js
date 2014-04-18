@@ -123,7 +123,7 @@ $(document).ready(function() {
 					$(this).off().remove();
 				});
 
-				modifNiveau($(this),$('#image-0'));
+				modifNiveau($(".btn-pix-desactive"),$('#image-0'));
 
 
 				//indication du chargement
@@ -138,8 +138,8 @@ $(document).ready(function() {
 
 	function modifNiveau(onglet,img_visible){
 
-		$(".selection-niveau ul li, .btn-pix-desactive").css("background-color","white");
-		onglet.css("background-color","red");
+		$(".selection-niveau ul li, .btn-pix-desactive").css({"background-color":"#222222","border-radius":"50%"});
+		onglet.css({"background-color":"#FF9933","border-radius":"0"});
 		image_visible = img_visible;
 		animation_affichage(0,0,0,true);
 	}
@@ -172,6 +172,9 @@ $(document).ready(function() {
 
 	function testReception(fichier){
 
+		if(!$('.chargement-image').length){
+
+			
 		if(fichier.length != 1) {
 			alert("Erreur : Vous avez déposé plusieurs fichiers");
 		} else {
@@ -194,6 +197,9 @@ $(document).ready(function() {
 				alert("La photo envoyée est trop volumineuse. 1Mo max");
 			}
 		}
+
+		}
+
 	}
 
 	//FONCTION QUI TRAITE L'IMAGE ENREGISTEE
@@ -271,6 +277,16 @@ $(document).ready(function() {
 
 				//indication d'un chargement
 				$(".selection-niveau ul").after("<div class='chargement-image'></div>");
+
+				if($("#image-0").attr("src") != ""){
+					//Supprition des anciens boutons 
+					$('.selection-niveau ul li').each(function(){
+						$(this).off().remove();
+					});
+
+					modifNiveau($(".btn-pix-desactive"),$('#image-0'));
+				}
+
 				//PIXELLISATION
 				pixellisation(1);
 

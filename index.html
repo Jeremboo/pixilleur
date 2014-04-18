@@ -3,24 +3,23 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <title>Pixilleur</title>
-        
+
         <!-- <link rel="icon" type="image/png" href="favicon.png" /> -->
         <meta name="description" content="Pixelisez vos images pour en resortir une vision abstraite et colorée">
-		    <meta name="robots" content="all">
-		    <meta name="author" content="Jérémie Boulay">
+        <meta name="robots" content="all">
+        <meta name="author" content="Jérémie Boulay">
 
         <link rel="stylesheet" href="css-pixilleur/style2.css">
     </head>
-    
-    <body>
 
+    <body>
         <header>
-          <h1></h1>
-          <h3 class="col-md-10">Du gros pixel dans vos images <strong>(BETA)</strong></h3>
-          <p class="fidelisation">Projet réalisé par <a href="http://www.jeremieboulay.fr">Jérémie Boulay</a></p>
+            <h1></h1>
+            <h3 class="col-md-10">Du gros pixel dans vos images <strong>(BETA)</strong></h3>
+            <p class="fidelisation">Projet réalisé par <a href="http://www.jeremieboulay.fr">Jérémie Boulay</a></p>
         </header>
 
-         <!--  En premier pour un chargement en fond de page -->
+        <!--  En premier pour un chargement en fond de page -->
         <section id="wrapper-image" class="wrapper-image">
 
             <!-- Ajout en JavaScript -->
@@ -32,50 +31,45 @@
                 <img id="image-4" src="" alt="Pixilleur - Jérémie Boulay - Image pixellisée niveau 4">
                 <img id="image-5" src="" alt="Pixilleur - Jérémie Boulay - Image pixellisée niveau 5">         
             </div>
-            
+
         </section>
 
         <div class="fonctionnalitees">
-
-          <ul id="block-fonctionnalitees" class="selection-type">
-            <li class="traitement-carre"></li>
-            <li class="traitement-2triangles"></li>
-            <li class="traitement-4triangles"></li>
-            <!-- <li class="traitement-losange"></li>
-            <li class="traitement-croix"></li> -->
-          </ul>
-
-          <div id="block-fonctionnalitees" class="selection-niveau">
-            <p>None</p>
-            <div class="btn-pix-desactive"></div>
-            <p>Max</p>
-            <ul>
-          
-            </ul>
-            <p>Min</p>
-          </div>
-
-           <div id="block-fonctionnalitees" class="parcourir">
-                <div class="visuel-drop-zone" id="visuel-drop-zone">Glissez et Déposez une image.</div>
-                <p class="caracteristique">JPG, PNG ou GIF / 1 Mo max</p>
-                <input type="file" dropzone="copy" class="drop-zone" id="drop-zone">
+            <div>
+                <ul id="block-fonctionnalitees" class="selection-type">
+                    <p>Type de Traitement</p>
+                    <li class="traitement-carre"></li>
+                    <li class="traitement-2triangles"></li>
+                    <li class="traitement-4triangles"></li>
+                    <!-- <li class="traitement-losange"></li>
+                    <li class="traitement-croix"></li> -->
+                </ul>
             </div>
 
-            <div id="block-fonctionnalitees" class="telechargement">
+            <div>
+                <div id="block-fonctionnalitees" class="selection-niveau">
+                    <p>None</p>
+                    <div class="btn-pix-desactive"></div>
+                    <p>-</p>
+                    <ul></ul>
+                    <p>+</p>
+                </div>
+
+                <div id="block-fonctionnalitees" class="parcourir">
+                    <div class="visuel-drop-zone" id="visuel-drop-zone">Glissez et Déposez une image.</div>
+                        <p class="caracteristique">JPG, PNG ou GIF / 1 Mo max</p>
+                        <input type="file" dropzone="copy" class="drop-zone" id="drop-zone">
+                    </div>
+                </div>
+
+                <div id="block-fonctionnalitees" class="telechargement">
                 <button id="btn_telechargement" class="btn_telechargement">Téléchargez l'image</button>
             </div>
-          
-
         </div>
-       
-        
 
-
-       
-
-		  <script src="js-pixilleur/jquery.js"></script>
-      <script src="js-pixilleur/main.js"></script>
-      <script type="text/javascript">
+        <script src="js-pixilleur/jquery.js"></script>
+        <script src="js-pixilleur/main.js"></script>
+        <script type="text/javascript">
 
         var _gaq = _gaq || [];
         _gaq.push(['_setAccount', 'UA-39290456-2']);
@@ -83,11 +77,11 @@
         _gaq.push(['_trackPageview']);
 
         (function() {
-          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
         })();
 
-      </script>
+        </script>
     </body>
 </html>
