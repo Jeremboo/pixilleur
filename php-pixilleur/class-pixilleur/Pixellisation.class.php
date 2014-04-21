@@ -48,6 +48,9 @@ class Pixellisation{
 					case '4triangles':
 						$this->traitement4Triangles($x,$y,$traceur_x,$traceur_y);
 						break;
+					case 'losange':
+						$this->traitementLosange($x,$y,$traceur_x,$traceur_y);
+						break;
 					case 'croix':
 						# code...
 						break;
@@ -142,6 +145,62 @@ class Pixellisation{
 					} else {
 						imagesetpixel($this->image, $xx+$traceur_x, $yy+$traceur_y ,$couleur_pixel_d);
 					}
+				}
+			}	
+		}
+
+	}
+
+	private function traitementLosange($x,$y,$traceur_x,$traceur_y){
+
+		$couleur_pixel_hg = $this->getColor($x-($this->dimention_grospixel/4),$y-($this->dimention_grospixel/4));
+		$couleur_pixel_hd = $this->getColor($x+($this->dimention_grospixel/4),$y-($this->dimention_grospixel/4));
+		$couleur_pixel_bd = $this->getColor($x+($this->dimention_grospixel/4),$y+($this->dimention_grospixel/4));
+		$couleur_pixel_bg = $this->getColor($x-($this->dimention_grospixel/4),$y+($this->dimention_grospixel/4));
+
+		$couleur_pixel_c = $this->getColor($x,$y);
+
+		//POUR : chaques colonne d'un grospixel a remplir
+		for($yy=0 ; $yy < $this->dimention_grospixel ; $yy++){
+			//POUR : chaque ligne d'un grospixel à remplir			
+			for($xx=0 ; $xx < $this->dimention_grospixel ; $xx++){
+
+				if( $xx < $this->dimention_grospixel/2 ){
+					if( $yy < $this->dimention_grospixel/2 ){
+						//HAUT GAUCHE
+						if ($xx < $this->dimention_grospixel-$yy){
+							imagesetpixel($this->image, $xx+$traceur_x, $yy+$traceur_y ,$couleur_pixel_hg);
+						} else {
+							imagesetpixel($this->image, $xx+$traceur_x, $yy+$traceur_y ,$couleur_pixel_c);
+						}
+
+					} else {
+						//BAS GAUCHE
+						if ($xx < $yy){
+						imagesetpixel($this->image, $xx+$traceur_x, $yy+$traceur_y ,$couleur_pixel_bg);
+						} else {
+							imagesetpixel($this->image, $xx+$traceur_x, $yy+$traceur_y ,$couleur_pixel_c);
+						}
+					}
+
+				} else {
+					if( $yy < $this->dimention_grospixel/2 ){
+						//HAUT DROITE
+						if ($xx < $this->dimention_grospixel-$yy){
+							imagesetpixel($this->image, $xx+$traceur_x, $yy+$traceur_y ,$couleur_pixel_c);
+						} else {
+							imagesetpixel($this->image, $xx+$traceur_x, $yy+$traceur_y ,$couleur_pixel_bd);
+						}
+
+					} else {
+						//BAS DROITE
+						if ($xx < $yy){
+						imagesetpixel($this->image, $xx+$traceur_x, $yy+$traceur_y ,$couleur_pixel_c);
+						} else {
+							imagesetpixel($this->image, $xx+$traceur_x, $yy+$traceur_y ,$couleur_pixel_bd);
+						}
+					}
+
 				}
 			}	
 		}

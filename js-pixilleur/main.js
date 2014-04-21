@@ -65,6 +65,10 @@ $(document).ready(function() {
 		modifTraitement($(this),"4triangles");
 	});
 
+	$('.traitement-losange').click(function(){
+		modifTraitement($(this),"losange");
+	});
+
 
 	//ECOUTEURS DESACTIVATION PIXELLISATION
 
@@ -127,7 +131,7 @@ $(document).ready(function() {
 
 
 				//indication du chargement
-				$(".selection-niveau ul").after("<div class='chargement-image'></div>");
+				$(".selection-niveau ul").append("<div class='chargement-image'></div>");
 
 
 				//depard d'une nouvelle pixellisation
@@ -276,7 +280,7 @@ $(document).ready(function() {
 			$.get("php-pixilleur/redimentionnement.php",{ url_img_base : url_image_base, width : img_width, height : img_height },function(){
 
 				//indication d'un chargement
-				$(".selection-niveau ul").after("<div class='chargement-image'></div>");
+				$(".selection-niveau ul").append("<div class='chargement-image'></div>");
 
 				if($("#image-0").attr("src") != ""){
 					//Supprition des anciens boutons 
@@ -330,7 +334,7 @@ $(document).ready(function() {
 					$('#image-'+nbr_pixellisation).attr('src', retour.url_image_pixilisee.substr(3));
 					
 					//ajouter un bouton de selection de la nouvelle image a pixelliser
-					$(".selection-niveau ul").append("<li class='btn-pix-"+nbr_pixellisation+"''></li>");
+					$(".selection-niveau ul .chargement-image").before("<li class='btn-pix-"+nbr_pixellisation+"''></li>");
 			    	$(".btn-pix-"+nbr_pixellisation).on("click",function(){
 			    		modifNiveau($(this),$('#image-'+nbr_pixellisation));
 			    	});
