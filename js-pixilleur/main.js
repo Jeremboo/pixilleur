@@ -39,8 +39,7 @@ $(document).ready(function() {
 	$(window).resize(function(){
 		 dimention_affichage_image();
 	});
-
-
+	
 	//ECOUTEURS ZONE DE TELECHARGEMENT
 
 	var zones = document.getElementsByClassName("drop-zone");
