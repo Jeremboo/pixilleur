@@ -65,8 +65,12 @@ $(document).ready(function() {
 		modifTraitement($(this),"4triangles");
 	});
 
-	$('.traitement-losange').click(function(){
-		modifTraitement($(this),"losange");
+	$('.traitement-4carres').click(function(){
+		modifTraitement($(this),"4carres");
+	});
+
+	$('.traitement-ramdom').click(function(){
+		modifTraitement($(this),"ramdom");
 	});
 
 
@@ -116,8 +120,8 @@ $(document).ready(function() {
 
 		if(!$('.chargement-image').length){
 
-			$(".selection-type li").css("background-color","white");
-			onglet.css("background-color","red");
+			$(".selection-type li").animate({"background-position-x":"-36px"},{"duration":200, "queue": false});
+			onglet.animate({"background-position-x":"0"},{"duration":200, "queue": false});
 			traitement = type;
 			
 			//SI : il ya déjà une image de chargée.
@@ -269,7 +273,7 @@ $(document).ready(function() {
 	function redimentionnementImage(){
 
 		//CALCUL DES DIMENTIONS
-		$.getJSON("php-pixilleur/nombres_divisible_commun.php",{ url_img_base : url_image_base },function(retour){
+		$.get("php-pixilleur/nombres_divisible_commun.php",{ url_img_base : url_image_base },function(retour){
 
 			img_width = retour.img_width;
 			img_height = retour.img_height;
@@ -321,7 +325,7 @@ $(document).ready(function() {
 		if(nbr_pixellisation < 6){
 
 			//AJAX : pixellisation de l'image en fonction d'un diviseur donné
-			$.getJSON("php-pixilleur/pixellisation.php",
+			$.get("php-pixilleur/pixellisation.php",
 				{ nbrpixel : tbl_diviseurs_commun[5-nbr_pixellisation],
 				  type_traitement : traitement,
 				  url_img_base : url_image_base,

@@ -27,45 +27,50 @@ class Pixellisation{
 
 		list($width, $height) = getimagesize($url_image_base);
 
-		//variable qui vont servir de pointeur
-		$traceur_x = 0;
-		$traceur_y = 0;
-
 		//POUR : la recuperation d'une couleur clé sur chaques colonne
-		for ($y = $this->dimention_grospixel/2 ; $y < $height ; $y = $y+$this->dimention_grospixel){
+		for ($y = 0 ; $y < $height ; $y = $y+$this->dimention_grospixel){
 			//POUR : la recuperation d'une couleur clé sur toute la ligne
-			for ($x = $this->dimention_grospixel/2 ; $x < $width ; $x = $x+$this->dimention_grospixel){
-
+			for ($x = 0 ; $x < $width ; $x = $x+$this->dimention_grospixel){
 
 				switch($typeTraitement){
 
 					case 'carre':
-						$this->traitementCarre($x,$y,$traceur_x,$traceur_y);
+						$this->traitementCarre($x,$y);
 						break;
 					case '2triangles':
-						$this->traitement2Triangles($x,$y,$traceur_x,$traceur_y);
+						$this->traitement2Triangles($x,$y);
 						break;
 					case '4triangles':
-						$this->traitement4Triangles($x,$y,$traceur_x,$traceur_y);
+						$this->traitement4Triangles($x,$y);
 						break;
-					case 'losange':
-						$this->traitementLosange($x,$y,$traceur_x,$traceur_y);
+					case '4carres':
+						$this->traitement4Carres($x,$y);
 						break;
-					case 'croix':
-						# code...
+					case 'ramdom':
+						$ramdomTraitement = rand(0,3);
+						switch($ramdomTraitement){
+							case 0:
+								$this->traitementCarre($x,$y);
+								break;
+							case 1:
+								$this->traitement2Triangles($x,$y);
+								break;
+							case 2:
+								$this->traitement4Triangles($x,$y);
+								break;
+							case 3:
+								$this->traitement4Carres($x,$y);
+								break;
+							default:
+								$this->traitementCarre($x,$y);
+								break;
+						}
 						break;
 					default:
-						$this->traitementCarre($x,$y,$traceur_x,$traceur_y);
+						$this->traitementCarre($x,$y);
 						break;
 				}
-
-				//modifier la localisation du pointeur
-				$traceur_x = $traceur_x+$this->dimention_grospixel;
-				
 			}
-			//changement de ligne, modification des pointeurs
-			$traceur_y = $traceur_y+$this->dimention_grospixel;	
-			$traceur_x = 0;
 		}
 
 		return $this->image;
@@ -73,136 +78,147 @@ class Pixellisation{
 	}
 
 	//Colorisation de tout le carre en une couleur unique
-	private function traitementCarre($x,$y,$traceur_x,$traceur_y){
+	private function traitementCarre($x,$y){
 
-		$couleur_pixel = $this->getColor($x,$y);
+		$couleur_pixel = $this->getColor($x+$this->dimention_grospixel/2,$y+$this->dimention_grospixel/2);
 
-		//POUR : chaques colonne d'un grospixel a remplir
-		for($yy=0 ; $yy < $this->dimention_grospixel ; $yy++){
+		$lim_x = $x+$this->dimention_grospixel;
+		$lim_y = $y+$this->dimention_grospixel;
+		$sauv_x = $x;
+
+		//POUR : chaque colonne d'un grospixel à remplir
+		for($y ; $y < $lim_y ; $y++){
 			//POUR : chaque ligne d'un grospixel à remplir			
-			for($xx=0 ; $xx < $this->dimention_grospixel ; $xx++){
+			for($x ; $x < $lim_x ; $x++){
 				//modification de la couleur du pixel
-				imagesetpixel($this->image, $xx+$traceur_x, $yy+$traceur_y ,$couleur_pixel);
-			}	
+				imagesetpixel($this->image, $x, $y ,$couleur_pixel);
+			}
+			$x = $sauv_x;	
 		}
 	}
 
-	private function traitement2Triangles($x,$y,$traceur_x,$traceur_y){
+	private function traitement2Triangles($x,$y){
 
-		$couleur_pixel_g = $this->getColor($x-($this->dimention_grospixel/4),$y);
-		$couleur_pixel_d = $this->getColor($x+($this->dimention_grospixel/4),$y);
+		$couleur_pixel_g = $this->getColor($x+($this->dimention_grospixel/4),$y+$this->dimention_grospixel/2);
+		$couleur_pixel_d = $this->getColor($x+(($this->dimention_grospixel/4)*3),$y+$this->dimention_grospixel/2);
+
+		$lim_x = $x+$this->dimention_grospixel;
+		$lim_y = $y+$this->dimention_grospixel;
+		$sauv_x = $x;
 
 		if ( rand(0,1) == 1){
 
-			//POUR : chaques colonne d'un grospixel a remplir
-			for($yy=0 ; $yy < $this->dimention_grospixel ; $yy++){
+			//POUR : chaque colonne d'un grospixel a remplir
+			for($y ; $y < $lim_y ; $y++){
 				//POUR : chaque ligne d'un grospixel à remplir			
-				for($xx=0 ; $xx < $this->dimention_grospixel ; $xx++){
+				for($x ; $x < $lim_x ; $x++){
 
-					if ($xx < $this->dimention_grospixel-$yy){
-						imagesetpixel($this->image, $xx+$traceur_x, $yy+$traceur_y ,$couleur_pixel_g);
+					if ($lim_x-$x > $lim_y-$y){
+						imagesetpixel($this->image, $x, $y ,$couleur_pixel_g);
 					} else {
-						imagesetpixel($this->image, $xx+$traceur_x, $yy+$traceur_y ,$couleur_pixel_d);
+						imagesetpixel($this->image, $x, $y ,$couleur_pixel_d);
 					}
-				}	
+				}
+				$x = $sauv_x;	
 			}
 
 		} else {
 
-			for($yy=0 ; $yy < $this->dimention_grospixel ; $yy++){		
-				for($xx=0 ; $xx < $this->dimention_grospixel ; $xx++){
-					if ($xx < $yy){
-						imagesetpixel($this->image, $xx+$traceur_x, $yy+$traceur_y ,$couleur_pixel_g);
+			for($y ; $y < $lim_y ; $y++){		
+				for($x ; $x < $lim_x ; $x++){
+
+					if ($lim_x-$x > $this->dimention_grospixel-($lim_y-$y)){
+						imagesetpixel($this->image, $x, $y ,$couleur_pixel_g);
 					} else {
-						imagesetpixel($this->image, $xx+$traceur_x, $yy+$traceur_y ,$couleur_pixel_d);
+						imagesetpixel($this->image, $x, $y ,$couleur_pixel_d);
 					}
-				}	
+				}
+				$x = $sauv_x;
 			}
 		}
 	}
 
-	private function traitement4Triangles($x,$y,$traceur_x,$traceur_y){
+	private function traitement4Triangles($x,$y){
 
-		$couleur_pixel_g = $this->getColor($x-($this->dimention_grospixel/4),$y);
-		$couleur_pixel_d = $this->getColor($x+($this->dimention_grospixel/4),$y);
-		$couleur_pixel_h = $this->getColor($x,$y-($this->dimention_grospixel/4));
-		$couleur_pixel_b = $this->getColor($x,$y+($this->dimention_grospixel/4));
+		$couleur_pixel_g = $this->getColor($x+($this->dimention_grospixel/4),$y+$this->dimention_grospixel/2);
+		$couleur_pixel_d = $this->getColor($x+(($this->dimention_grospixel/4)*3),$y+$this->dimention_grospixel/2);
+		$couleur_pixel_h = $this->getColor($x+$this->dimention_grospixel/2,$y+($this->dimention_grospixel/4));
+		$couleur_pixel_b = $this->getColor($x+$this->dimention_grospixel/2,$y+(($this->dimention_grospixel/4)*3));
 
-		//POUR : chaques colonne d'un grospixel a remplir
-		for($yy=0 ; $yy < $this->dimention_grospixel ; $yy++){
+		$lim_x = $x+$this->dimention_grospixel;
+		$lim_y = $y+$this->dimention_grospixel;
+		$sauv_x = $x;
+
+		//POUR : chaque colonne d'un grospixel a remplir
+		for($y ; $y < $lim_y ; $y++){
 			//POUR : chaque ligne d'un grospixel à remplir			
-			for($xx=0 ; $xx < $this->dimention_grospixel ; $xx++){
+			for($x ; $x < $lim_x ; $x++){
 
-				if ($xx < $yy){
-					if ($xx < $this->dimention_grospixel-$yy){
-						imagesetpixel($this->image, $xx+$traceur_x, $yy+$traceur_y ,$couleur_pixel_g);
+				if ($lim_x-$x > $lim_y-$y){
+					if ($lim_x-$x > $this->dimention_grospixel-($lim_y-$y)){
+						imagesetpixel($this->image, $x, $y ,$couleur_pixel_g);
 					} else {
-						imagesetpixel($this->image, $xx+$traceur_x, $yy+$traceur_y ,$couleur_pixel_b);
+						imagesetpixel($this->image, $x, $y ,$couleur_pixel_b);
 					}					
 				} else {
-					if ($xx < $this->dimention_grospixel-$yy){
-						imagesetpixel($this->image, $xx+$traceur_x, $yy+$traceur_y ,$couleur_pixel_h);
+					if ($lim_x-$x > $this->dimention_grospixel-($lim_y-$y)){
+						imagesetpixel($this->image, $x, $y ,$couleur_pixel_h);
 					} else {
-						imagesetpixel($this->image, $xx+$traceur_x, $yy+$traceur_y ,$couleur_pixel_d);
+						imagesetpixel($this->image, $x, $y ,$couleur_pixel_d);
 					}
 				}
-			}	
+			}
+			$x = $sauv_x;	
 		}
-
 	}
 
-	private function traitementLosange($x,$y,$traceur_x,$traceur_y){
+	private function traitement4carres($x,$y){
 
-		$couleur_pixel_hg = $this->getColor($x-($this->dimention_grospixel/4),$y-($this->dimention_grospixel/4));
-		$couleur_pixel_hd = $this->getColor($x+($this->dimention_grospixel/4),$y-($this->dimention_grospixel/4));
-		$couleur_pixel_bd = $this->getColor($x+($this->dimention_grospixel/4),$y+($this->dimention_grospixel/4));
-		$couleur_pixel_bg = $this->getColor($x-($this->dimention_grospixel/4),$y+($this->dimention_grospixel/4));
+		$couleur_pixel_hg = $this->getColor($x+($this->dimention_grospixel/4),$y+($this->dimention_grospixel/4));
+		$couleur_pixel_hd = $this->getColor($x+(($this->dimention_grospixel/4)*3),$y+($this->dimention_grospixel/4));
+		$couleur_pixel_bd = $this->getColor($x+(($this->dimention_grospixel/4)*3),$y+(($this->dimention_grospixel/4)*3));
+		$couleur_pixel_bg = $this->getColor($x+($this->dimention_grospixel/4),$y+(($this->dimention_grospixel/4)*3));
 
-		$couleur_pixel_c = $this->getColor($x,$y);
+		$couleur_pixel = $this->getColor($x+$this->dimention_grospixel/2,$y+$this->dimention_grospixel/2);
 
-		//POUR : chaques colonne d'un grospixel a remplir
-		for($yy=0 ; $yy < $this->dimention_grospixel ; $yy++){
+		$lim_x = $x+$this->dimention_grospixel;
+		$lim_y = $y+$this->dimention_grospixel;
+		$sauv_x = $x;
+
+		//POUR : chaque colonne d'un grospixel a remplir
+		for($y ; $y < $lim_y ; $y++){
 			//POUR : chaque ligne d'un grospixel à remplir			
-			for($xx=0 ; $xx < $this->dimention_grospixel ; $xx++){
+			for($x ; $x < $lim_x ; $x++){
 
-				if( $xx < $this->dimention_grospixel/2 ){
-					if( $yy < $this->dimention_grospixel/2 ){
+				if( $lim_x-$x > $this->dimention_grospixel/2 ){
+					if( $lim_y-$y > $this->dimention_grospixel/2 ){
 						//HAUT GAUCHE
-						if ($xx < $this->dimention_grospixel-$yy){
-							imagesetpixel($this->image, $xx+$traceur_x, $yy+$traceur_y ,$couleur_pixel_hg);
-						} else {
-							imagesetpixel($this->image, $xx+$traceur_x, $yy+$traceur_y ,$couleur_pixel_c);
-						}
+						
+						imagesetpixel($this->image, $x, $y ,$couleur_pixel_hg);
 
 					} else {
 						//BAS GAUCHE
-						if ($xx < $yy){
-						imagesetpixel($this->image, $xx+$traceur_x, $yy+$traceur_y ,$couleur_pixel_bg);
-						} else {
-							imagesetpixel($this->image, $xx+$traceur_x, $yy+$traceur_y ,$couleur_pixel_c);
-						}
+						imagesetpixel($this->image, $x, $y ,$couleur_pixel_bg);
 					}
 
 				} else {
-					if( $yy < $this->dimention_grospixel/2 ){
+					if( $lim_y-$y > $this->dimention_grospixel/2 ){
 						//HAUT DROITE
-						if ($xx < $this->dimention_grospixel-$yy){
-							imagesetpixel($this->image, $xx+$traceur_x, $yy+$traceur_y ,$couleur_pixel_c);
-						} else {
-							imagesetpixel($this->image, $xx+$traceur_x, $yy+$traceur_y ,$couleur_pixel_bd);
-						}
+							imagesetpixel($this->image, $x, $y ,$couleur_pixel_hd);
 
 					} else {
-						//BAS DROITE
-						if ($xx < $yy){
-						imagesetpixel($this->image, $xx+$traceur_x, $yy+$traceur_y ,$couleur_pixel_c);
-						} else {
-							imagesetpixel($this->image, $xx+$traceur_x, $yy+$traceur_y ,$couleur_pixel_bd);
-						}
+						//BAS DROITE*
+							imagesetpixel($this->image, $x, $y ,$couleur_pixel_bd);
 					}
 
 				}
-			}	
+
+				// if(($lim_y-$y)/2 < $lim_x-$x && $lim_x-$x < $this->dimention_grospixel-($lim_y-$y)/2 ){
+				// 	imagesetpixel($this->image, $x, $y ,$couleur_pixel_c);
+				// 	imagesetpixel($this->image, $x+($lim_x-$x), $y+($lim_y-$y) ,$couleur_pixel_c);
+				// }
+			}
+			$x = $sauv_x;	
 		}
 
 	}
