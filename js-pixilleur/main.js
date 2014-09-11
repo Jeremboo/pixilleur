@@ -29,7 +29,9 @@ $(document).ready(function() {
 	// INIT
 	// ###############
 
-	$.get("php-pixilleur/netoyage.php");	
+	$.get("php-pixilleur/netoyage.php");
+
+	$("#presentation").animate({"opacity":1,"margin-top":130});	
 
 	// ###############
 	// ECOUTEURS
@@ -100,15 +102,6 @@ $(document).ready(function() {
 		);
 	});
 
-
-	// ###############
-	// DEPART
-	// ###############
-
-
-	
-	
-
 	
 	// ###############
 	// FONCTIONS
@@ -117,14 +110,18 @@ $(document).ready(function() {
 
 	function modifTraitement(onglet,type){
 
+		//S'il n'y a pas déjà une image en cour de traitement (que la basile de chargement n'existe pas).
 		if(!$('.chargement-image').length){
 
+			//Animation des btns type.
 			$(".selection-type li").animate({"background-position-x":"-36px"},{"duration":200, "queue": false});
 			onglet.animate({"background-position-x":"0"},{"duration":200, "queue": false});
+
 			traitement = type;
 			
 			//SI : il ya déjà une image de chargée.
 			if($("#image-0").attr("src") != ""){
+
 				//Supprition des anciens boutons 
 				$('.selection-niveau ul li').each(function(){
 					$(this).off().remove();
@@ -180,30 +177,29 @@ $(document).ready(function() {
 	function testReception(fichier){
 
 		if(!$('.chargement-image').length){
-
-			
-		if(fichier.length != 1) {
-			alert("Erreur : Vous avez déposé plusieurs fichiers");
-		} else {
-
-			//TEST du poid de l'image 1Mo max 
-			if( fichier[0].size < 1048576 ){
-
-				// TEST du format de l'image
-				if( fichier[0].type == "image/jpeg" || fichier[0].type == "image/png" || fichier[0].type == "image/gif"){
-
-					//ENVOIS DU FICHIER AU TELECHARGEMENT
-					var fichierImage = new FormData(); //API HTML5
-					fichierImage.append("fichier-image",fichier[0]);
-					telechargement(fichierImage);
-
-				} else {
-					alert("La photo envoyée n'est pas au bon format. (accepté : .jpg .png .gif");
-				}
+	
+			if(fichier.length != 1) {
+				alert("Erreur : Vous avez déposé plusieurs fichiers");
 			} else {
-				alert("La photo envoyée est trop volumineuse. 1Mo max");
+
+				//TEST du poid de l'image 1Mo max 
+				if( fichier[0].size < 1048576 ){
+
+					// TEST du format de l'image
+					if( fichier[0].type == "image/jpeg" || fichier[0].type == "image/png" || fichier[0].type == "image/gif"){
+
+						//ENVOIS DU FICHIER AU TELECHARGEMENT
+						var fichierImage = new FormData(); //API HTML5
+						fichierImage.append("fichier-image",fichier[0]);
+						telechargement(fichierImage);
+
+					} else {
+						alert("La photo envoyée n'est pas au bon format. (accepté : .jpg .png .gif");
+					}
+				} else {
+					alert("La photo envoyée est trop volumineuse. 1Mo max");
+				}
 			}
-		}
 
 		}
 
@@ -252,23 +248,25 @@ $(document).ready(function() {
 
 			//animation pour cacher l'image et les fonctionnalitées
 			animation_affichage(0,0,0,false);
-			$('.fonctionnalites')
-				.animate({'opacity':0},800)
-			;
+			// $('.fonctionnalites')
+			// 	.animate({'opacity':0},800)
+			// ;
 
 		} else {
 
 			//SINON : Mise en place de la présentation pour l'image.
-			$('.presentation div, .presentation p').animate({'opacity':0},500, function(){	
+			$('#presentation').animate({'opacity':0},500, function(){	
 					
 				//animation de mise en place
 				$(this).css("display","none");
-				$('.presentation h1').animate({'padding-top':($(window).height()/2)-180},500);
+				$("#fonctionnalitees").animate({"left":0},500);
+				//$('.presentation h1').animate({'padding-top':($(window).height()/2)-180},500);
 
 			});
 		}
 	}
 
+	//Va chercher les nouvelles dimentions de l'image en fonctions du nombre de diviseurs communs.
 	function redimentionnementImage(){
 
 		//CALCUL DES DIMENTIONS
@@ -318,7 +316,7 @@ $(document).ready(function() {
 	}
 
 
-	//FONCTION RECURCIVE POUR FAIRE LES IMAGES PIXELLISEE
+	//FONCTION RECURCIVE POUR CONSTRUIRE LES IMAGES PIXELLISEE
 	function pixellisation(nbr_pixellisation){
 
 		if(nbr_pixellisation < 6){
@@ -376,8 +374,6 @@ $(document).ready(function() {
 	function animation_affichage(w,h,o,reaparition){
 
 		$('#wrapper-image').animate({'opacity':o},500);
-
-
 
 		$('#image')
 			.animate(
