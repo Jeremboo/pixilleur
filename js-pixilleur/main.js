@@ -122,7 +122,7 @@ $(document).ready(function() {
 			//SI : il ya déjà une image de chargée.
 			if($("#image-0").attr("src") != ""){
 
-				//Supprition des anciens boutons 
+				//Suppression des anciens boutons 
 				$('.selection-niveau ul li').each(function(){
 					$(this).off().remove();
 				});
@@ -132,7 +132,6 @@ $(document).ready(function() {
 
 				//indication du chargement
 				$(".selection-niveau ul").append("<div class='chargement-image'></div>");
-
 
 				//depard d'une nouvelle pixellisation
 				pixellisation(1);
@@ -331,9 +330,12 @@ $(document).ready(function() {
 				  code_ref : code
 			    },function(retour){
 
+			    	console.log(retour.url_image_pixilisee);
+
 					//ajouter la src à l'image correspondante
-					$('#image-'+nbr_pixellisation).attr('src', retour.url_image_pixilisee.substr(3));
-					
+					d = new Date();
+					 //passage en paramètre d'un élément variable afin de recharger l'image à chaque nouvelle réecriture
+					$('#image-'+nbr_pixellisation).attr('src', retour.url_image_pixilisee.substr(3)+"?"+d.getTime());
 					//ajouter un bouton de selection de la nouvelle image a pixelliser
 					$(".selection-niveau ul .chargement-image").before("<li class='btn-pix-"+nbr_pixellisation+"''></li>");
 			    	$(".btn-pix-"+nbr_pixellisation).on("click",function(){
